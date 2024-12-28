@@ -1,0 +1,290 @@
+<!--DOCUMENT html-->
+<html lang=pt-Br>
+
+<head>
+    <meta charset=utf-8>
+    <!--Link CSS-->
+    <link rel="stylesheet" type="text/css" href="LandPage.css?v=1.0">
+    <!--link CSS das redes sociais-->
+    <script src="https://kit.fontawesome.com/73131e96fb.js" crossorigin="anonymous"></script>
+    <!--Title Aba-->
+    <title>Max Sanfona</title>
+    <!--Responsive-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Meta Article-->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Max Sanfona" />
+    <meta property="og:description" content="Conexão Exclusiva: Acesse os recursos!" />
+    <meta property="fb:app_id" content="395218274842235" />
+    <meta property="og:url" content="https://maxwellclr.github.io/maxsanfona/" />
+    <meta property="og:image" content="https://maxwellclr.github.io/maxsanfona/imagens/MaxSanfonaMeta.jpg" />
+    <!--Ico-->
+    <!--Img Aba-->
+    <link rel="icon" href="imagens/LOGO maxsanfona ouro.png" type="image/x-icon">
+    <link rel="shortcut icon" href="imagens/LOGO maxsanfona ouro.png" type="image/x-icon">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-88WFZ20CC3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-88WFZ20CC3');
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics Organic -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QM8KS44QZD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-QM8KS44QZD');
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics Ads-->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-181373549-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-181373549-1');
+    </script>
+    <!-- Meta Pixel Code -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '195697228207071');
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=195697228207071&ev=PageView&noscript=1" />
+    </noscript>
+    <!-- End Meta Pixel Code -->
+    <!--lomadee-->
+    <meta name="lomadee-verification" content="22813954" />
+</head>
+
+<body>
+    <!--script background-->
+    <script>
+        const numberOfGlows = 100; // Número de flocos de neve
+        const glows = [];
+        let centerX = window.innerWidth / 2; // Posição X inicial do centro da tela
+        let centerY = window.innerHeight / 2; // Posição Y inicial do centro da tela
+
+        // Função para gerar um número aleatório dentro de um intervalo
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        // Função para criar um floco de neve
+        function createGlow() {
+            const glow = document.createElement('div');
+            glow.classList.add('glow');
+            // Posição inicial aleatória com buffer extra
+            glow.style.left = `${random(-100, window.innerWidth + 100)}px`;
+            glow.style.top = `${random(-100, window.innerHeight + 100)}px`;
+            document.body.appendChild(glow);
+            return glow;
+        }
+
+        // Função para animar os flocos de neve com movimento flutuante
+        function animateGlow(glow) {
+            const duration = random(5, 15); // Duração da animação entre 5 e 15 segundos
+            const endX = random(-0, 0); // Movimento lateral aleatório maior
+            const endY = random(50, 150); // Movimento vertical aleatório para simular neve caindo
+
+            requestAnimationFrame(() => {
+                glow.style.transition = `transform ${duration}s ease-in-out`;
+                const currentTransform = getComputedStyle(glow).transform;
+                const matrix = new DOMMatrix(currentTransform);
+                let newX = matrix.m41 + endX;
+                let newY = matrix.m42 + endY;
+
+                // Reentrar flocos que saem dos limites da janela
+                if (parseFloat(glow.style.left) + newX < -100) {
+                    newX = window.innerWidth + 100 - parseFloat(glow.style.left);
+                }
+                if (parseFloat(glow.style.left) + newX > window.innerWidth + 100) {
+                    newX = -100 - parseFloat(glow.style.left);
+                }
+                if (parseFloat(glow.style.top) + newY > window.innerHeight + 100) {
+                    glow.style.top = `${-100}px`; // Recomeçar acima da tela
+                    newY = 0;
+                }
+
+                glow.style.transform = `translate(${newX}px, ${newY}px)`;
+            });
+
+            // Reiniciar a animação quando ela termina
+            glow.addEventListener('transitionend', () => animateGlow(glow), { once: true });
+        }
+
+        // Cria e anima todos os flocos de neve
+        for (let i = 0; i < numberOfGlows; i++) {
+            const glow = createGlow();
+            glows.push(glow);
+            animateGlow(glow);
+        }
+
+        // Função para mover os flocos quando o cursor se move
+        function moveGlows(event) {
+            const deltaX = event.clientX - centerX; // Diferença de posição X do cursor
+            const deltaY = event.clientY - centerY; // Diferença de posição Y do cursor
+            centerX = event.clientX; // Atualiza a posição X do centro
+            centerY = event.clientY; // Atualiza a posição Y do centro
+            glows.forEach(glow => {
+                const currentLeft = parseFloat(glow.style.left);
+                const currentTop = parseFloat(glow.style.top);
+
+                // Movimentar os flocos com um efeito sutil
+                glow.style.left = `${currentLeft + deltaX * 0.1}px`;
+                glow.style.top = `${currentTop + deltaY * 0.1}px`;
+            });
+        }
+
+        // Evento para mover os flocos com o mouse
+        window.addEventListener('mousemove', moveGlows);
+
+        // Evento para mover os flocos com o toque na tela (para dispositivos móveis)
+        window.addEventListener('touchmove', (event) => {
+            const touch = event.touches[0];
+            moveGlows(touch);
+        });
+    </script>
+    <!--Header-->    
+    <div class="header">              
+        <div class="imgartigomaior"> 
+            <br>   
+            <br>       
+        </div>        
+              
+        <div class="imgartigomaior">
+            <h1 style="color:rgb(255, 255, 255);font-family:Montserrat, sans-serif">INTRODUÇÃO A PARTITURA</h1>
+            <h2 style="color:rgb(234, 255, 0);font-family:Montserrat, sans-serif">Aprenda de uma vez por todas, a diferença entre Compasso Simples, Composto e Sintético.</h2>
+            <h3 style="color:rgb(255, 255, 255);font-family:Montserrat, sans-serif">Entenda de forma prática e objetiva os fundamentos essenciais para interpretar e criar partituras.</h3> 
+            <iframe
+                width="545" height="300" src="https://www.youtube.com/embed/jwBlw3Fy3E4?si=gUUFIHjsDBOo6ju1"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
+        </div>            
+        <div class="imgartigomenor">
+            <h2 style="color:rgb(255, 255, 255);font-family:Montserrat, sans-serif">INTRODUÇÃO A PARTITURA</h2>
+            <h3 style="color:rgb(234, 255, 0);font-family:Montserrat, sans-serif">Aprenda de uma vez por todas, a diferença entre Compasso Simples, Composto e Sintético.</h3>
+            <h4  style="color:rgb(255, 255, 255);font-family:Montserrat, sans-serif">Entenda de forma prática e objetiva os fundamentos essenciais para interpretar e criar partituras.</h4> 
+            <iframe
+                width="100%" height="180" src="https://www.youtube.com/embed/jwBlw3Fy3E4?si=gUUFIHjsDBOo6ju1"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>        
+            <br>        
+            <div>
+                <h2><b>€40,00 - Acesso Ilimitado</b></h2>
+            </div>                            
+            <a href="https://pay.hotmart.com/B97168566E" class="button">                     
+                <i class="fas fa-angle-double-right"> Obter Curso</i>            
+            </a>
+            <p>Aproveite a oferta antes do reajuste!</p>
+        </div>                    
+    </div>         
+    <!--Article-->
+    <div class="article">
+        <div class="imgartigomaior">
+            <div>
+                <h2><b>€40,00 - Acesso Ilimitado</b></h2>
+            </div>
+            
+            <a href="https://pay.hotmart.com/B97168566E" class="button">                     
+                <i class="fas fa-angle-double-right"> Obter Curso</i>            
+            </a>
+            <p>Aproveite a oferta antes do reajuste!</p>
+        </div>
+        <br>
+        <div class="imgartigomaior">
+            <img 
+                src="imagens/Profile.jpg" 
+                style="
+                    border-radius: 10px;
+                    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Adiciona sombra ao redor da imagem */
+                    width: 35%; /* Define o tamanho da imagem proporcional */
+                    height: auto; /* Mantém as proporções */
+                    float: left;
+                    margin: 20px;">
+        </div>
+        <div class="imgartigomenor">
+            <img 
+                src="imagens/Profile.jpg" 
+                style="
+                    border-radius: 10px;
+                    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Adiciona sombra ao redor da imagem */
+                    width: 50%; /* Define o tamanho da imagem proporcional */
+                    height: auto; /* Mantém as proporções */
+                    float: center;
+                    margin: 20px;">
+        </div>
+        <div style="text-align: left;">
+            <h3 style="color:rgb(0, 255, 0);font-family:Montserrat, sans-serif">
+                SOBRE O AUTOR
+            </h3>
+            <h2 style="font-family:Montserrat, sans-serif"><b>
+                Maxwell Clemente
+            </b></h2>
+            <p style="font-family:Montserrat, sans-serif">
+                Sou o Maxwell Clemente, músico, compositor e produtor musical. Minha história com a música começou cedo, lá em Brasília,
+                onde nasci. Desde criança, sempre fui fascinado por instrumentos e, com o tempo, essa paixão virou profissão. Aos 19
+                anos, uma das minhas composições alcançou 2 milhões de visualizações no YouTube, o que abriu as portas para o mercado
+                sertanejo em Goiânia e me trouxe oportunidades incríveis como músico e compositor.
+            </p>
+            <br>
+            <p style="font-family:Montserrat, sans-serif">
+                Estudei em lugares como o Clube do Choro e a Escola de Música de Brasília, onde aprofundei meus conhecimentos de teoria
+                musical e aprendi que a música não é só sobre tocar, mas também sobre entender e criar de forma inteligente.
+            </p>
+            <br>
+            <p style="font-family:Montserrat, sans-serif">
+                Criei o Curso de Introdução à Partitura porque sei como é frustrante querer tocar ou compor algo e se sentir travado por
+                não entender o básico. Meu objetivo é te mostrar que aprender música pode ser leve, prático e transformador.
+            </p>
+            <br>
+            <p style="font-family:Montserrat, sans-serif">
+                Se você quer dar os primeiros passos na partitura ou apenas entender a lógica por trás da música, eu estou aqui pra te
+                ajudar a fazer isso acontecer. Vamos juntos?
+            </p>    
+        </div> 
+        <br>
+        <br>
+        <br> 
+        <div>
+            <div>
+                <h2><b>€40,00 - Acesso Ilimitado</b></h2>
+            </div>
+            
+            <a href="https://pay.hotmart.com/B97168566E" class="button">                     
+                <i class="fas fa-angle-double-right"> Obter Curso</i>            
+            </a>
+            <p>Aproveite a oferta antes do reajuste!</p>
+        </div>                     
+    </div> 
+       
+    <!--Footer-->
+    <div class="footer"> &copy; Copyright 2020-
+        <script type="text/javascript">document.write(new Date().getFullYear());</script>| All rights reserved to <br>
+        <a href="https://cadastroempresa.com.br/cnpj/09.299.723/0001-08-max-corporation-ltda">Max Corporation Ltda
+            09.299.723/0001-08.</a>
+    </div>
+</body>
+<!--Fim do DOCUMENT html-->
+
+</html>
