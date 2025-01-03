@@ -176,10 +176,41 @@
                     <a href="https://www.youtube.com/channel/UCbPsCV1WXD2wEsnj69375SQ" target="_blank"><i class="fab fa-youtube"></i></a>
                     <a href="https://www.instagram.com/maxsanfona/" target="_blank"><i class="fab fa-instagram"></i></a>
                     <a href="https://www.facebook.com/maxsanfona" target="_blank"><i class="fab fa-facebook"></i></a>
-                    <a href="https://api.whatsapp.com/send?phone=5561982658962&text=" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://www.tiktok.com/@maxsanfona" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    <a id="whatsapp-link" href="https://api.whatsapp.com/send?phone=5561982658962&text=" target="_blank"><i class="fab fa-whatsapp"></i></a> <a href="https://www.tiktok.com/@maxsanfona" target="_blank"><i class="fab fa-tiktok"></i></a>
                     <a href="https://t.me/maxsanfona" target="_blank" ><i class="fab fa-telegram"></i></a>
-                 </div>
+                    <script>
+                        async function setWhatsAppLink() {
+                          try {
+                            // Fazendo a requisição para obter o país do usuário
+                            const response = await fetch('https://ipapi.co/json/');
+                            const data = await response.json();
+                      
+                            // Obtendo o código do país
+                            const countryCode = data.country_code;
+                      
+                            // Definindo o número de WhatsApp com base no país
+                            let phoneNumber = "5561982658962"; // Número padrão (Brasil)
+                            if (countryCode === "PT") {
+                              phoneNumber = "351916442357"; // Número de Portugal
+                            } else if (countryCode !== "BR"); //{
+                              //phoneNumber = "123456789"; // Outro número padrão para demais países
+                            //}
+                      
+                            // Atualizando o link do WhatsApp
+                            const whatsappLink = document.getElementById("whatsapp-link");
+                            whatsappLink.href = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=`;
+                          } catch (error) {
+                            console.error("Erro ao obter localização:", error);
+                            // Fallback para número padrão em caso de falha
+                            const whatsappLink = document.getElementById("whatsapp-link");
+                            whatsappLink.href = "https://api.whatsapp.com/send?phone=5561982658962&text=";
+                          }
+                        }
+                      
+                        // Chamar a função ao carregar a página
+                        setWhatsAppLink();
+                      </script>
+                </div>
                  <br>
                  <a href="https://maxwellclr.github.io/maxsanfona/Blog.html#plans" class="linksmenu">
                      <div class="nav"><img src="imagens/28-musica.png"  style="width:50px;height:40px;float:left;margin-top: 4px;margin-left: 6px;">
