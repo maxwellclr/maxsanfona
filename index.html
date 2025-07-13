@@ -67,91 +67,93 @@
     <body>
         <!--script background-->
         <script>
-        const numberOfGlows = 100; // Número de flocos de neve
-        const glows = [];
-        let centerX = window.innerWidth / 2; // Posição X inicial do centro da tela
-        let centerY = window.innerHeight / 2; // Posição Y inicial do centro da tela
+            const numberOfGlows = 100; // Número de flocos de neve
+            const glows = [];
+            let centerX = window.innerWidth / 2; // Posição X inicial do centro da tela
+            let centerY = window.innerHeight / 2; // Posição Y inicial do centro da tela
 
-        // Função para gerar um número aleatório dentro de um intervalo
-        function random(min, max) {
-            return Math.random() * (max - min) + min;
+            // Função para gerar um número aleatório dentro de um intervalo
+            function random(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            // Função para criar um floco de neve
+            function createGlow() {
+                const glow = document.createElement('div');
+                glow.classList.add('glow');
+                // Posição inicial aleatória com buffer extra
+                glow.style.left = `${random(-100, window.innerWidth + 100)}px`;
+                glow.style.top = `${random(-100, window.innerHeight + 100)}px`;
+                document.body.appendChild(glow);
+                return glow;
+            }
+
+            // Função para animar os flocos de neve com movimento flutuante
+            function animateGlow(glow) {
+            const duration = random(5, 15); // Duração da animação entre 5 e 15 segundos
+            const endX = random(-0, 0); // Movimento lateral aleatório maior
+            const endY = random(50, 150); // Movimento vertical aleatório para simular neve caindo
+
+            requestAnimationFrame(() => {
+                glow.style.transition = `transform ${duration}s ease-in-out`;
+                const currentTransform = getComputedStyle(glow).transform;
+                const matrix = new DOMMatrix(currentTransform);
+                let newX = matrix.m41 + endX;
+                let newY = matrix.m42 + endY;
+
+                // Reentrar flocos que saem dos limites da janela
+                if (parseFloat(glow.style.left) + newX < -100) {
+                    newX = window.innerWidth + 100 - parseFloat(glow.style.left);
+                }
+                if (parseFloat(glow.style.left) + newX > window.innerWidth + 100) {
+                    newX = -100 - parseFloat(glow.style.left);
+                }
+                if (parseFloat(glow.style.top) + newY > window.innerHeight + 100) {
+                    glow.style.top = `${-100}px`; // Recomeçar acima da tela
+                    newY = 0;
+                }
+
+                glow.style.transform = `translate(${newX}px, ${newY}px)`;
+            });
+
+            // Reiniciar a animação quando ela termina
+            glow.addEventListener('transitionend', () => animateGlow(glow), { once: true });
         }
 
-        // Função para criar um floco de neve
-        function createGlow() {
-            const glow = document.createElement('div');
-            glow.classList.add('glow');
-            // Posição inicial aleatória com buffer extra
-            glow.style.left = `${random(-100, window.innerWidth + 100)}px`;
-            glow.style.top = `${random(-100, window.innerHeight + 100)}px`;
-            document.body.appendChild(glow);
-            return glow;
+        // Cria e anima todos os flocos de neve
+        for (let i = 0; i < numberOfGlows; i++) {
+            const glow = createGlow();
+            glows.push(glow);
+            animateGlow(glow);
         }
 
-        // Função para animar os flocos de neve com movimento flutuante
-        function animateGlow(glow) {
-        const duration = random(5, 15); // Duração da animação entre 5 e 15 segundos
-        const endX = random(-0, 0); // Movimento lateral aleatório maior
-        const endY = random(50, 150); // Movimento vertical aleatório para simular neve caindo
+        // Função para mover os flocos quando o cursor se move
+        function moveGlows(event) {
+            const deltaX = event.clientX - centerX; // Diferença de posição X do cursor
+            const deltaY = event.clientY - centerY; // Diferença de posição Y do cursor
+            centerX = event.clientX; // Atualiza a posição X do centro
+            centerY = event.clientY; // Atualiza a posição Y do centro
+            glows.forEach(glow => {
+                const currentLeft = parseFloat(glow.style.left);
+                const currentTop = parseFloat(glow.style.top);
 
-        requestAnimationFrame(() => {
-            glow.style.transition = `transform ${duration}s ease-in-out`;
-            const currentTransform = getComputedStyle(glow).transform;
-            const matrix = new DOMMatrix(currentTransform);
-            let newX = matrix.m41 + endX;
-            let newY = matrix.m42 + endY;
+                // Movimentar os flocos com um efeito sutil
+                glow.style.left = `${currentLeft + deltaX * 0.1}px`;
+                glow.style.top = `${currentTop + deltaY * 0.1}px`;
+            });
+        }
 
-            // Reentrar flocos que saem dos limites da janela
-            if (parseFloat(glow.style.left) + newX < -100) {
-                newX = window.innerWidth + 100 - parseFloat(glow.style.left);
-            }
-            if (parseFloat(glow.style.left) + newX > window.innerWidth + 100) {
-                newX = -100 - parseFloat(glow.style.left);
-            }
-            if (parseFloat(glow.style.top) + newY > window.innerHeight + 100) {
-                glow.style.top = `${-100}px`; // Recomeçar acima da tela
-                newY = 0;
-            }
+        // Evento para mover os flocos com o mouse
+        window.addEventListener('mousemove', moveGlows);
 
-            glow.style.transform = `translate(${newX}px, ${newY}px)`;
+        // Evento para mover os flocos com o toque na tela (para dispositivos móveis)
+        window.addEventListener('touchmove', (event) => {
+            const touch = event.touches[0];
+            moveGlows(touch);
         });
-
-        // Reiniciar a animação quando ela termina
-        glow.addEventListener('transitionend', () => animateGlow(glow), { once: true });
-    }
-
-    // Cria e anima todos os flocos de neve
-    for (let i = 0; i < numberOfGlows; i++) {
-        const glow = createGlow();
-        glows.push(glow);
-        animateGlow(glow);
-    }
-
-    // Função para mover os flocos quando o cursor se move
-    function moveGlows(event) {
-        const deltaX = event.clientX - centerX; // Diferença de posição X do cursor
-        const deltaY = event.clientY - centerY; // Diferença de posição Y do cursor
-        centerX = event.clientX; // Atualiza a posição X do centro
-        centerY = event.clientY; // Atualiza a posição Y do centro
-        glows.forEach(glow => {
-            const currentLeft = parseFloat(glow.style.left);
-            const currentTop = parseFloat(glow.style.top);
-
-            // Movimentar os flocos com um efeito sutil
-            glow.style.left = `${currentLeft + deltaX * 0.1}px`;
-            glow.style.top = `${currentTop + deltaY * 0.1}px`;
-        });
-    }
-
-    // Evento para mover os flocos com o mouse
-    window.addEventListener('mousemove', moveGlows);
-
-    // Evento para mover os flocos com o toque na tela (para dispositivos móveis)
-    window.addEventListener('touchmove', (event) => {
-        const touch = event.touches[0];
-        moveGlows(touch);
-    });
         </script>
+            
+        
         
         <!--Header-->
         <header>
@@ -211,23 +213,23 @@
                 </div>
                  <br>
                  <a href="https://maxwellclr.github.io/maxsanfona/Blog.html#plans" class="linksmenu">
-                     <div class="nav"><img src="imagens/28-musica.png"  alt="" style="width:50px;height:40px;float:left;margin-top: 4px;margin-left: 6px;">
-                     <p><b> Music Classes </b></p></div>
+                     <div class="nav"><img src="imagens/28-musica.png"  alt="" style="width:50px;height:40px;float:left;margin-top: 10px;margin-left: 6px;">
+                     <h4><b> Music Classes </b></h4></div>
                  </a>
                  <br>
                  <a href="https://maxwellclr.github.io/maxsanfona/Blog.html" class="linksmenu">
-                     <div class="nav"> <img src="imagens/LOGO_maxsanfona_ouro.png"  alt="" style="width:50px;height:40px;float:left;margin-top: 4px;margin-left: 7px;">
-                     <p><b>Max Sanfona</b></p></div>
+                     <div class="nav"> <img src="imagens/LOGO_maxsanfona_ouro.png"  alt="" style="width:50px;height:40px;float:left;margin-top: 10px;margin-left: 7px;">
+                     <h4><b>Max Sanfona</b></h4></div>
                  </a>
                  <br>
                  <a href="https://maxwellclr.github.io/maxsanfona/LandPage.html" class="linksmenu">
-                    <div class="nav"><img src="imagens/MisteriodoCompasso.png" alt=""  style="width:40px;height:40px;float:left;margin-top: 5px; margin-left: 10px;margin-right: 6px;">
-                    <p><b>Introdução a Partitura</b></p></div>
+                    <div class="nav"><img src="imagens/MisteriodoCompasso.png" alt=""  style="width:40px;height:40px;float:left;margin-top: 8px; margin-left: 10px;margin-right: 6px;">
+                    <h4><b>Introdução a Partitura</b></h4></div>
                 </a>
                  <br>
                  <a href="https://maxwellclr.github.io/maxsanfona/OSonhoePossivel.html" class="linksmenu">
-                     <div class="nav"><img src="imagens/Capa_Album_Spotify_440x440.jpg" alt=""  style="width:30px;height:30px;float:left;margin-top: 10px; margin-left: 15px;margin-right: 6px;">
-                     <p><b>Ouça em todas Plataformas</b></p></div>
+                     <div class="nav"><img src="imagens/Capa_Album_Spotify_440x440.jpg" alt=""  style="width:30px;height:30px;float:left;margin-top: 15px; margin-left: 15px;margin-right: 6px;">
+                     <h4><b>Ouça em todas Plataformas</b></h4></div>
                  </a>
                  
                 <br>
@@ -235,7 +237,8 @@
         </section>
         <!--Footer-->
         
-        <div class="footer">&copy; Copyright 2020-<script type="text/javascript">document.write(new Date().getFullYear());</script>| All rights reserved to <br> 
+        <div class="footer"> &copy; Copyright 2020-
+            <script>document.write(new Date().getFullYear());</script>| All rights reserved to <br> 
                 <a href="https://cadastroempresa.com.br/cnpj/09.299.723/0001-08-max-corporation-ltda">Max Corporation Ltda 09.299.723/0001-08.</a> </div> 
         <br>
         <br>
