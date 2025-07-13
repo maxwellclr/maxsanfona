@@ -1,7 +1,7 @@
-<!--DOCUMENT html-->
-<html lang=pt-Br>
+<!DOCTYPE html>
+<html lang="pt-Br">
     <head>
-        <meta charset=utf-8>
+        <meta charset="UTF-8">
         <!--Link CSS-->
         <link rel="stylesheet" type="text/css" href="style1.css?v=1.0">
         <!--link CSS das redes sociais-->
@@ -11,16 +11,16 @@
         <!--Responsive-->
         <meta name="viewport" content="width=mobile-width, initial-scale=1">
         <!--Meta Article-->
-        <meta property="og:type"               content="article" />
-        <meta property="og:title"              content="Max Sanfona"/>
-        <meta property="og:description"        content="Conexão Exclusiva: Acesse os recursos!"/>
-        <meta property="fb:app_id"             content="395218274842235"/>
-        <meta property="og:url"                content="https://maxwellclr.github.io/maxsanfona/" />
-        <meta property="og:image"              content="https://maxwellclr.github.io/maxsanfona/imagens/MaxSanfonaMeta.jpg"/>
+        <meta property="og:type"               content="article">
+        <meta property="og:title"              content="Max Sanfona">
+        <meta property="og:description"        content="Conexão Exclusiva: Acesse os recursos!">
+        <meta property="fb:app_id"             content="395218274842235">
+        <meta property="og:url"                content="https://maxwellclr.github.io/maxsanfona/">
+        <meta property="og:image"              content="https://maxwellclr.github.io/maxsanfona/imagens/MaxSanfonaMeta.jpg">
         <!--Ico-->
         <!--Img Aba-->
-        <link rel="icon" href="imagens/LOGO maxsanfona ouro.png" type="image/x-icon">
-        <link rel="shortcut icon" href="imagens/LOGO maxsanfona ouro.png" type="image/x-icon">
+        <link rel="icon" href="imagens/LOGO_maxsanfona_ouro" type="image/x-icon">
+        <link rel="shortcut icon" href="imagens/LOGO_maxsanfona_ouro.png" type="image/x-icon">
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-88WFZ20CC3"></script>
         <script>
@@ -60,38 +60,41 @@
             fbq('track', 'PageView');
         </script>
         <noscript>
-            <img height="1" width="1" style="display:none"src="https://www.facebook.com/tr?id=195697228207071&ev=PageView&noscript=1"/>
+            <img height="1" width="1" style="display:none"
+                src="https://www.facebook.com/tr?id=195697228207071&ev=PageView&noscript=1"/>
         </noscript>
         <!-- End Meta Pixel Code -->        
         <!--lomadee-->
-        <meta name="lomadee-verification" content="22813954" />
+        <meta name="lomadee-verification" content="22813954"/>
+
     </head>
+
     <body>
         <!--script background-->
         <script>
-    const numberOfGlows = 100; // Número de flocos de neve
-    const glows = [];
-    let centerX = window.innerWidth / 2; // Posição X inicial do centro da tela
-    let centerY = window.innerHeight / 2; // Posição Y inicial do centro da tela
+        const numberOfGlows = 100; // Número de flocos de neve
+        const glows = [];
+        let centerX = window.innerWidth / 2; // Posição X inicial do centro da tela
+        let centerY = window.innerHeight / 2; // Posição Y inicial do centro da tela
 
-    // Função para gerar um número aleatório dentro de um intervalo
-    function random(min, max) {
-        return Math.random() * (max - min) + min;
-    }
+        // Função para gerar um número aleatório dentro de um intervalo
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
 
-    // Função para criar um floco de neve
-    function createGlow() {
-        const glow = document.createElement('div');
-        glow.classList.add('glow');
-        // Posição inicial aleatória com buffer extra
-        glow.style.left = `${random(-100, window.innerWidth + 100)}px`;
-        glow.style.top = `${random(-100, window.innerHeight + 100)}px`;
-        document.body.appendChild(glow);
-        return glow;
-    }
+        // Função para criar um floco de neve
+        function createGlow() {
+            const glow = document.createElement('div');
+            glow.classList.add('glow');
+            // Posição inicial aleatória com buffer extra
+            glow.style.left = `${random(-100, window.innerWidth + 100)}px`;
+            glow.style.top = `${random(-100, window.innerHeight + 100)}px`;
+            document.body.appendChild(glow);
+            return glow;
+        }
 
-    // Função para animar os flocos de neve com movimento flutuante
-    function animateGlow(glow) {
+        // Função para animar os flocos de neve com movimento flutuante
+        function animateGlow(glow) {
         const duration = random(5, 15); // Duração da animação entre 5 e 15 segundos
         const endX = random(-0, 0); // Movimento lateral aleatório maior
         const endY = random(50, 150); // Movimento vertical aleatório para simular neve caindo
